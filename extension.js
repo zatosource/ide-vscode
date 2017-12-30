@@ -1,30 +1,57 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+const request = require('request');
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-function activate(context) {
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "zato-publish" is now active!');
+const MSG = {
+    NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
+    NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
+};
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', function () {
-        // The code you place here will be executed every time your command is executed
+const COMMANDS = {
+    'extension.zatoPublish': onZatoPublish,
+    'extension.zatoTestConnection': onZatoTestConnection
+};
 
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
 
-    context.subscriptions.push(disposable);
+function onZatoTestConnection()
+{
+    vscode.window.showInformationMessage("Hi");
 }
-exports.activate = activate;
 
-// this method is called when your extension is deactivated
-function deactivate() {
+
+function onZatoPublish()
+{
+    // Give up if there is no active document.
+    if(! vscode.window.activeTextEditor) {
+        vscode.window.showInformationMessage(MSG.NO_DOC);
+        return;
+    }
+
+    // Ensure the document is a Python module.
+    var doc = vscode.window.activeTextEditor.document;
+    if(! doc.fileName.endsWith('.py')) {
+        vscode.window.showInformationMessage(MSG.NOT_PYTHON);
+        return;
+    }
+
+    try {
+        vscode.window.showInformationMessage(
+            vscode.window.activeTextEditor.document.fileName
+        );
+    } catch(e) {
+        vscode.window.showInformationMessage(e.toString());
+    }
 }
-exports.deactivate = deactivate;
+
+
+exports.activate = function(context) {
+    for(const [commandId, func] of Object.entries(COMMANDS)) {
+        console.error([commandId, func].toString());
+        let disposable = vscode.commands.registerCommand(commandId, func);
+        context.subscriptions.push(disposable);
+    }
+};
+
+
+exports.deactivate = function() {
+};
