@@ -11,16 +11,40 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.zatoPublish",
+        "onCommand:extension.zatoTestConnection"
     ],
     "main": "./extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.zatoPublish",
+                "title": "Publish Changes To Zato"
+            },
+            {
+                "command": "extension.zatoTestConnection",
+                "title": "Test Zato Connection"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Zato Publish Configuration",
+            "properties": {
+                "zatoPublish.url": {
+                    "type": "string",
+                    "default": "http://localhost:11223/zato/ide-upload",
+                    "description": "URL to the Zato server or load balancer where changes should be published."
+                },
+                "zatoPublish.username": {
+                    "type": "string",
+                    "description": "User name to authenticate to Zato with."
+                },
+                "zatoPublish.password": {
+                    "type": "string",
+                    "description": "Password to authenticate to Zato with."
+                }
+            }
+        }
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
