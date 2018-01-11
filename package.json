@@ -3,7 +3,7 @@
     "displayName": "zato-publish",
     "description": "Publish service updates to a Zato cluster",
     "version": "0.0.1",
-    "publisher": "ZatoSource",
+    "publisher": "zatosource",
     "engines": {
         "vscode": "^1.19.0"
     },
@@ -71,6 +71,7 @@
         "js-base64": "^2.4.0",
         "path": "^0.12.7",
         "request": "^2.83.0",
-        "request-promise-native": "^1.0.5"
+        "request-promise-native": "^1.0.5",
+        "vsce": "^1.35.0"
     }
 }
