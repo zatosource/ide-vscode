@@ -14,12 +14,12 @@ as an add-on for older Zato releases. For older releases, please consult
 * Once you have installed the extension, visit the **Security -> HTTP Basic
   Auth** section of the administration UI for your cluster:
 
-  \!\[HTTP Basic Auth\]\(images/basic_auth.png\)
+  ![HTTP Basic Auth](images/basic_auth.png)
 
 * Select the **Change password** option for the pre-installed **ide_publisher**
   account:
 
-  \!\[Change password\]\(images/change_password.png\)
+  ![Change password](images/change_password.png)
 
 * Set the password to something meaningful, and choose **OK**.
 
