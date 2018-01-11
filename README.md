@@ -63,6 +63,21 @@ This step is also necessary prior to publishing the plug-in, as plug-ins are
 distributed entirely self contained in the plug-in marketplace.
 
 
+## Development process
+
+Refer to the Visual Studio Code docs. To test the extension during development:
+
+* Ensure your copy of Visual Studio Code does not have a release version of the
+  extension installed (not strictly necessary but will avoid immediate
+  confusion!).
+* Ensure you have symlinked (or copied) the `code` tool to somewhere in your `PATH`.
+* Run `code .` from the plug-in's directory.
+* Edit the plug-in as desired.
+* Press F5 to launch a new copy of Visual Studio Code with the in-development plug-in
+  loaded.
+* Rinse and repeat.
+
+
 # Publishing a new release
 
 <a href="https://code.visualstudio.com/docs/extensions/publish-extension">See here</a>.
