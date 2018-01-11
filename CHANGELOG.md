@@ -1,7 +1,5 @@
 # Change Log
-All notable changes to the "zato-publish" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 0.0.1 (2018-01-11)
 
-## [Unreleased]
-- Initial release
+- Initial release.
