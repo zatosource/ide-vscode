@@ -5,8 +5,8 @@ click hot deployment of the active Python source file to a Zato cluster
 specified in your workspace or global configuration.
 
 It relies on Zato 3.0's `ide-deploy` endpoint, which is additionally available
-as an add-on for older Zato releases. For older releases, please consult <a
-href="https://github.com/zatosource/zato-labs">the zato-labs repository</a>.
+as an add-on for older Zato releases. For older releases, please consult
+<a href="https://github.com/zatosource/zato-labs">the zato-labs repository</a>.
 
 
 ## Setup
@@ -14,12 +14,12 @@ href="https://github.com/zatosource/zato-labs">the zato-labs repository</a>.
 * Once you have installed the extension, visit the **Security -> HTTP Basic
   Auth** section of the administration UI for your cluster:
 
-  \!\[HTTP Basic Auth\]\(images/basic_auth.jpg\)
+  \!\[HTTP Basic Auth\]\(images/basic_auth.png\)
 
 * Select the **Change password** option for the pre-installed **ide_publisher**
   account:
 
-  \!\[Change password\]\(images/change_password.jpg\)
+  \!\[Change password\]\(images/change_password.png\)
 
 * Set the password to something meaningful, and choose **OK**.
 
