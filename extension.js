@@ -1,5 +1,6 @@
-const vscode = require('vscode');
+const path = require('path');
 const request = require('request');
+const vscode = require('vscode');
 const ZatoClient = require('./zato_client');
 
 
@@ -14,14 +15,6 @@ const COMMANDS = {
     'extension.zatoPublish': onZatoPublish,
     'extension.zatoTestConnection': onZatoTestConnection
 };
-
-
-function alert(s)
-{
-    // Microsoft don't get Javascript.
-    console.log("alert() param: %s", s);
-    vscode.window.showInformationMessage(s);
-}
 
 
 /**
@@ -76,6 +69,18 @@ function onZatoTestConnection()
 }
 
 
+function onDeploySuccess(msg)
+{
+    vscode.window.showInformationMessage(msg);
+}
+
+
+function onDeployError(msg)
+{
+    vscode.window.showErrorMessage(msg);
+}
+
+
 function onZatoPublish()
 {
     var client = getZatoClientOrOpenConfig();
@@ -96,19 +101,9 @@ function onZatoPublish()
         return;
     }
 
-    var text = doc.getText();
-    alert(text);
-
-    // alert(vscode.window.activeTextEditor.document);
-    return;
-    
-    try {
-        vscode.window.showInformationMessage(
-            vscode.window.activeTextEditor.document.fileName
-        );
-    } catch(e) {
-        vscode.window.showInformationMessage(e.toString());
-    }
+    var filename = path.basename(doc.fileName);
+    var data = doc.getText();
+    client.deploy(filename, data, onDeploySuccess, onDeployError);
 }
 
 

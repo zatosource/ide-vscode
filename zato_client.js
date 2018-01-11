@@ -1,6 +1,6 @@
 "use strict";
 
-const request = require('request');
+const request = require('request-promise-native');
 const Base64 = require('js-base64').Base64;
 
 
@@ -22,7 +22,9 @@ function ZatoClient(url, username, password) {
             user: username,
             pass: password,
             sendImmediately: true // Don't waste a roundtrip on HTTP 401.
-        }
+        },
+        json: true,
+        resolveWithFullResponse: true
     });
 }
 
@@ -34,16 +36,19 @@ ZatoClient.prototype = {
      */
     ping: function(onSuccess, onFailure) {
         (this._request({})
-            .on("error", onFailure)
-            .on("response", this._onPingResponse.bind(this, onSuccess, onFailure)));
+            .then(this._onPingResponse.bind(this, onSuccess, onFailure))
+            .catch(onFailure));
     },
 
     _onPingResponse: function(onSuccess, onFailure, response) {
-        if(response.statusCode == 200) {
-            onSuccess();
+        if(response.statusCode != 200) {
+            console.log("_onPingResponse: status!=200: %o", response);
+            onFailure('Cluster returned HTTP status ' + response.statusCode);
+        } else if(! response.body.zato_ide_deploy_create_response.success) {
+            console.log("_onPingResponse: success=false: %o", response.body);
+            onFailure('Cluster indicated failure: ' + response.body.zato_ide_deploy_create_response.msg);
         } else {
-            console.log("_onPingResponse: status!=200: %s", response);
-            onFailure();
+            onSuccess(response.body.zato_ide_deploy_create_response.msg);
         }
     },
 
@@ -68,25 +73,23 @@ ZatoClient.prototype = {
                     payload: Base64.encode(data)
                 }
             })
-            .on("response", this._onDeployResponse.bind(this, onSuccess, onFailure))
-            .on("error", this._onDeployError.bind(this, onFailure))
+            .then(this._onDeployResponse.bind(this, onSuccess, onFailure))
+            .catch(onFailure)
         );
     },
 
     _onDeployResponse: function(onSuccess, onFailure, response)
     {
-        if(response.statusCode == 200) {
-            onSuccess();
-        } else {
+        console.log("_onDeployResponse %o", response);
+        if(response.statusCode != 200) {
             console.log("_onDeployResponse: status!=200: %o", response);
-            onFailure();
+            onFailure('Cluster returned HTTP status ' + response.statusCode);
+        } else if(! response.body.zato_ide_deploy_create_response.success) {
+            console.log("_onPingResponse: success=false: %o", response.body);
+            onFailure('Cluster indicated failure: ' + response.body.zato_ide_deploy_create_response.msg);
+        } else {
+            onSuccess(response.body.zato_ide_deploy_create_response.msg);
         }
-    },
-
-    _onDeployError: function(onFailure, error)
-    {
-        console.log("_onDeployError: " + error);
-        onFailure();
     }
 };
 
