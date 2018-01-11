@@ -1,10 +1,13 @@
 const vscode = require('vscode');
 const request = require('request');
+const ZatoClient = require('./zato_client');
 
 
 const MSG = {
+    NO_CONFIG: "Please configure your Zato cluster settings.",
     NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
+    PING_OK: "Your Zato cluster connection appears to be operating correctly."
 };
 
 const COMMANDS = {
@@ -13,14 +16,73 @@ const COMMANDS = {
 };
 
 
+function alert(s)
+{
+    // Microsoft don't get Javascript.
+    console.log("alert() param: %s", s);
+    vscode.window.showInformationMessage(s);
+}
+
+
+/**
+ * Create a ZatoClient instance using ConfigurationModel keys, returning
+ * null if any required keys are absent.
+ */
+function getZatoClient()
+{
+    var model = vscode.workspace.getConfiguration('zatoPublish');
+    var url = model.get('url', '');
+    var username = model.get('username', '');
+    var password = model.get('password', '');
+
+    if(url && username && password) {
+        return new ZatoClient(url, username, password);
+    }
+
+    return null;
+}
+
+
+function getZatoClientOrOpenConfig()
+{
+    var client = getZatoClient();
+    if(! client) {
+        vscode.commands.executeCommand("workbench.action.openGlobalSettings");
+        vscode.window.showInformationMessage(MSG.NO_CONFIG);
+    }
+    return client;
+}
+
+
+function onZatoPingSuccess()
+{
+    vscode.window.showInformationMessage(MSG.PING_OK);
+}
+
+
+function onZatoPingFailure(err)
+{
+    console.log("onZatoPingFailure: " + err);
+    vscode.window.showErrorMessage("PING FAILED");
+}
+
+
 function onZatoTestConnection()
 {
-    vscode.window.showInformationMessage("Hi");
+    var client = getZatoClientOrOpenConfig();
+    if(client) {
+        client.ping(onZatoPingSuccess, onZatoPingFailure);
+    }
 }
 
 
 function onZatoPublish()
 {
+    var client = getZatoClientOrOpenConfig();
+    if(! client) {
+        return;
+    }
+
     // Give up if there is no active document.
     if(! vscode.window.activeTextEditor) {
         vscode.window.showInformationMessage(MSG.NO_DOC);
@@ -29,11 +91,17 @@ function onZatoPublish()
 
     // Ensure the document is a Python module.
     var doc = vscode.window.activeTextEditor.document;
-    if(! doc.fileName.endsWith('.py')) {
+    if(! (doc && doc.fileName.endsWith('.py'))) {
         vscode.window.showInformationMessage(MSG.NOT_PYTHON);
         return;
     }
 
+    var text = doc.getText();
+    alert(text);
+
+    // alert(vscode.window.activeTextEditor.document);
+    return;
+    
     try {
         vscode.window.showInformationMessage(
             vscode.window.activeTextEditor.document.fileName
@@ -45,8 +113,7 @@ function onZatoPublish()
 
 
 exports.activate = function(context) {
-    for(const [commandId, func] of Object.entries(COMMANDS)) {
-        console.error([commandId, func].toString());
+    for(let [commandId, func] of Object.entries(COMMANDS)) {
         let disposable = vscode.commands.registerCommand(commandId, func);
         context.subscriptions.push(disposable);
     }

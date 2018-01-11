@@ -3,6 +3,7 @@
 const request = require('request');
 const Base64 = require('js-base64').Base64;
 
+
 /**
  * A zato.service.invoke client that handles only JSON payloads and JSON responses.
  * 
@@ -16,9 +17,7 @@ function ZatoClient(url, username, password) {
     this._password = password;
     this._request = request.defaults({
         baseUrl: url,
-        url: this.INVOKE_SERVICE_SUFFIX,
-        method: 'POST',
-        agent: this.USER_AGENT,
+        url: this.IDE_DEPLOY_SERVICE_SUFFIX,
         auth: {
             user: username,
             pass: password,
@@ -28,43 +27,66 @@ function ZatoClient(url, username, password) {
 }
 
 ZatoClient.prototype = {
-    INVOKE_SERVICE_SUFFIX: "/zato/admin/invoke",
-    USER_AGENT: 'zato_client.js',
-    CHANNEL: 'invoke',
-    DEFAULT_EXPIRATION: 15,  // zato/common/__init__.py::BROKER.DEFAULT_EXPIRATION
-    PING_SERVICE_NAME: 'zato.ping',
-
-    /**
-     * Arrange for a request to be made through the admin.invoke mechanism. The only
-     * supported request and response data format is JSON.
-     * 
-     * @param {string} serviceName  Name of the service to invoke.
-     * @param {object} payload  JSON-serializable payload.
-     */
-    _invoke: function(serviceName, payload) {
-        var payloadJson = JSON.stringify(payload || {});
-    
-        var jsonPayload = {
-            name: serviceName,
-            payload: Base64.encode(payloadJson),
-            channel: this.CHANNEL,
-            data_format: 'json',
-            transport: null,
-            async: false,
-            expiration: this.DEFAULT_EXPIRATION,
-            pid: null,
-        };
-
-        return this._request({
-            json: payload
-        });
-    },
+    IDE_DEPLOY_SERVICE_SUFFIX: "/zato/ide-deploy",
 
     /**
      * Arrange for a dummy request to be made through the admin.invoke mechanism.
      */
-    ping() {
-        return this._invoke(this.PING_SERVICE_NAME);
+    ping: function(onSuccess, onFailure) {
+        (this._request({})
+            .on("error", onFailure)
+            .on("response", this._onPingResponse.bind(this, onSuccess, onFailure)));
+    },
+
+    _onPingResponse: function(onSuccess, onFailure, response) {
+        if(response.statusCode == 200) {
+            onSuccess();
+        } else {
+            console.log("_onPingResponse: status!=200: %s", response);
+            onFailure();
+        }
+    },
+
+    /**
+     * Arrange for a source file to be hot-deployed to the cluster.
+     * 
+     * @param {string} filename
+     *      File name to deploy.
+     * @param {string} data
+     *      File contents.
+     * @param {function} onSuccess
+     *      Callback invoked as onSuccces() on success.
+     * @param {function} onFailure
+     *      Callback invoked as onFailure() on failure. Currently no diagnostic is returned.
+     */
+    deploy: function(filename, data, onSuccess, onFailure)
+    {
+        (this._request(
+            {
+                json: {
+                    payload_name: filename,
+                    payload: Base64.encode(data)
+                }
+            })
+            .on("response", this._onDeployResponse.bind(this, onSuccess, onFailure))
+            .on("error", this._onDeployError.bind(this, onFailure))
+        );
+    },
+
+    _onDeployResponse: function(onSuccess, onFailure, response)
+    {
+        if(response.statusCode == 200) {
+            onSuccess();
+        } else {
+            console.log("_onDeployResponse: status!=200: %o", response);
+            onFailure();
+        }
+    },
+
+    _onDeployError: function(onFailure, error)
+    {
+        console.log("_onDeployError: " + error);
+        onFailure();
     }
 };
 
