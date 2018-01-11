@@ -1,8 +1,9 @@
 {
-    "name": "zato-publish",
-    "displayName": "zato-publish",
-    "description": "Publish service updates to a Zato cluster",
+    "name": "ide-vs-code",
+    "displayName": "ide-vs-code",
+    "description": "Hot deploy Python scripts to a Zato cluster",
     "version": "0.0.1",
+    "galleryBanner.color": "#ffffe3",
     "publisher": "zatosource",
     "engines": {
         "vscode": "^1.19.0"
