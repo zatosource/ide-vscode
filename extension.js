@@ -7,6 +7,7 @@ const ZatoClient = require('./zato_client');
 const MSG = {
     NO_CONFIG: "Please configure your Zato cluster settings.",
     NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
+    EMPTY_DOC: "Cannot deploy: the Python module you selected contains nothing.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
     PING_OK: "Your Zato cluster connection appears to be operating correctly."
 };
@@ -103,6 +104,11 @@ function onZatoPublish()
 
     var filename = path.basename(doc.fileName);
     var data = doc.getText();
+    if(! data.length) {
+        vscode.window.showErrorMessage(MSG.EMPTY_DOC);
+        return;
+    }
+
     client.deploy(filename, data, onDeploySuccess, onDeployError);
 }
 
