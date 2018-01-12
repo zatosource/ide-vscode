@@ -39,6 +39,21 @@ as an add-on for older Zato releases. For older releases, please consult
   indicating communication with the cluster was successful.
 
 
+## Deployment
+
+While editing a Python source file, simply tap ctrl-shift-L (or cmd-shift-L on
+Mac) to start deployment of the current file. The file's basename is used as
+its module filename on the server.
+
+The hot-deploy feature is additionally available from the command palette
+(ctrl-shift-p) and as an editor toolbar option.
+
+
+## Limitations
+
+The source file is always assumed to be in UTF-8. This matches the expectation
+that Zato modules are always written in UTF-8.
+
 
 # Making Changes
 

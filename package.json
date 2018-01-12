@@ -32,6 +32,12 @@
                 "title": "Test Zato Connection"
             }
         ],
+        "keybindings": [{
+            "command": "extension.zatoHotDeploy",
+            "key": "ctrl+shift+l",
+            "mac": "cmd+shift+l",
+            "when": "editorTextFocus"
+        }],
         "menus": {
             "editor/title": [
                 {
