@@ -13,7 +13,7 @@ const MSG = {
 };
 
 const COMMANDS = {
-    'extension.zatoPublish': onZatoPublish,
+    'extension.zatoHotDeploy': onZatoPublish,
     'extension.zatoTestConnection': onZatoTestConnection
 };
 
@@ -24,7 +24,7 @@ const COMMANDS = {
  */
 function getZatoClient()
 {
-    var model = vscode.workspace.getConfiguration('zatoPublish');
+    var model = vscode.workspace.getConfiguration('zato');
     var url = model.get('url', '');
     var username = model.get('username', '');
     var password = model.get('password', '');

@@ -1,7 +1,7 @@
 {
     "name": "ide-vs-code",
     "displayName": "Zato for Visual Studio Code",
-    "description": "Hot deploy Python scripts to a Zato cluster",
+    "description": "Hot-deploy Python scripts to a Zato cluster",
     "version": "0.0.1",
     "repository": {
         "type": "git",
@@ -17,15 +17,15 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.zatoPublish",
+        "onCommand:extension.zatoHotDeploy",
         "onCommand:extension.zatoTestConnection"
     ],
     "main": "./extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.zatoPublish",
-                "title": "Publish Changes To Zato"
+                "command": "extension.zatoHotDeploy",
+                "title": "Hot-deploy to Zato"
             },
             {
                 "command": "extension.zatoTestConnection",
@@ -35,7 +35,7 @@
         "menus": {
             "editor/title": [
                 {
-                    "command": "extension.zatoPublish",
+                    "command": "extension.zatoHotDeploy",
                     "group": "navigation"
                 }
             ]
@@ -44,17 +44,17 @@
             "type": "object",
             "title": "Zato Publish Configuration",
             "properties": {
-                "zatoPublish.url": {
+                "zato.url": {
                     "type": "string",
                     "default": "http://localhost:11223/",
                     "description": "URL to the Zato server or load balancer where changes should be published."
                 },
-                "zatoPublish.username": {
+                "zato.username": {
                     "type": "string",
                     "default": "ide_publisher",
                     "description": "User name to authenticate to Zato with."
                 },
-                "zatoPublish.password": {
+                "zato.password": {
                     "type": "string",
                     "description": "Password to authenticate to Zato with."
                 }
