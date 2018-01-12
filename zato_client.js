@@ -33,6 +33,12 @@ ZatoClient.prototype = {
 
     /**
      * Arrange for a dummy request to be made through the admin.invoke mechanism.
+     *
+     * @param {function} onSuccess
+     *      Callback invoked as onSuccess(msg) on success.
+     * @param {function} onFailure
+     *      Callback invoked as onFailure(e) on failure. The passed
+     *      argument may be used as an internal diagnostic only.
      */
     ping: function(onSuccess, onFailure) {
         (this._request({})
@@ -60,22 +66,21 @@ ZatoClient.prototype = {
      * @param {string} data
      *      File contents.
      * @param {function} onSuccess
-     *      Callback invoked as onSuccces() on success.
+     *      Callback invoked as onSuccess(msg) on success.
      * @param {function} onFailure
-     *      Callback invoked as onFailure() on failure. Currently no diagnostic is returned.
+     *      Callback invoked as onFailure(e) on failure. The passed
+     *      argument may be used as an internal diagnostic only.
      */
     deploy: function(filename, data, onSuccess, onFailure)
     {
-        (this._request(
-            {
-                json: {
-                    payload_name: filename,
-                    payload: Base64.encode(data)
-                }
-            })
+        var json = {
+            payload_name: filename,
+            payload: Base64.encode(data)
+        };
+
+        (this._request({json: json})
             .then(this._onDeployResponse.bind(this, onSuccess, onFailure))
-            .catch(onFailure)
-        );
+            .catch(onFailure));
     },
 
     _onDeployResponse: function(onSuccess, onFailure, response)
