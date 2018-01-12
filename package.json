@@ -3,6 +3,10 @@
     "displayName": "Zato for Visual Studio Code",
     "description": "Hot deploy Python scripts to a Zato cluster",
     "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zatosource/ide-vs-code.git"
+    },
     "icon": "images/zato-128xsquare-alpha.png",
     "galleryBanner.color": "#ffffe3",
     "publisher": "zatosource",
