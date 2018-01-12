@@ -48,6 +48,8 @@ its module filename on the server.
 The hot-deploy feature is additionally available from the command palette
 (ctrl-shift-p) and as an editor toolbar option.
 
+![Hot-deploy button](images/hot_deploy_button.png)
+
 
 ## Limitations
 
