@@ -9,7 +9,8 @@ const MSG = {
     NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
     EMPTY_DOC: "Cannot deploy: the Python module you selected contains nothing.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
-    PING_OK: "Zato cluster connection pinged OK."
+    PING_OK: "Zato cluster connection pinged OK.",
+    REQUEST_ERROR: "Zato request error: "
 };
 
 const COMMANDS = {
@@ -57,7 +58,7 @@ function onZatoPingSuccess()
 function onZatoPingFailure(err)
 {
     console.log("onZatoPingFailure: " + err);
-    vscode.window.showErrorMessage("PING FAILED");
+    vscode.window.showErrorMessage(MSG.REQUEST_ERROR + err);
 }
 
 
@@ -78,7 +79,7 @@ function onDeploySuccess(msg)
 
 function onDeployError(msg)
 {
-    vscode.window.showErrorMessage(msg);
+    vscode.window.showErrorMessage(MSG.REQUEST_ERROR + msg);
 }
 
 
