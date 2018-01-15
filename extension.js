@@ -9,7 +9,7 @@ const MSG = {
     NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
     EMPTY_DOC: "Cannot deploy: the Python module you selected contains nothing.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
-    PING_OK: "Your Zato cluster connection appears to be operating correctly."
+    PING_OK: "Zato cluster connection pinged OK."
 };
 
 const COMMANDS = {
