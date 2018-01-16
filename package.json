@@ -1,8 +1,8 @@
 {
-    "name": "ide-vs-code",
+    "name": "ide-vscode",
     "displayName": "Zato for Visual Studio Code",
     "description": "Hot-deploy Zato services to clusters",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/zatosource/ide-vscode.git"
