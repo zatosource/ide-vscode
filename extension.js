@@ -18,6 +18,8 @@ const COMMANDS = {
     'extension.zatoTestConnection': onZatoTestConnection
 };
 
+const UPLOAD_MARKER_RE = /#\s+zato:\s+ide-deploy=True/;
+
 
 /**
  * Create a ZatoClient instance using ConfigurationModel keys, returning
@@ -114,11 +116,37 @@ function onZatoPublish()
 }
 
 
+/**
+ * Respond to vscode.onDidSaveTextDocument() by checking if the currently
+ * loaded file is a Python script, and if it is, if it contains
+ * AUTODEPLOY_MARKER, automatically trigger onZatoPublish().
+ *
+ * @param {vscode.TextDocument} doc
+ */
+function onTextDocumentSaved(doc)
+{
+    console.log('hi');
+    if(! doc.fileName.endsWith('.py')) {
+        return;
+    }
+
+    var text = doc.getText() || '';
+    if(! text.match(UPLOAD_MARKER_RE)) {
+        return;
+    }
+
+    console.log('onTextDocumentSaved: triggering onZatoPublish()')
+    onZatoPublish();
+}
+
+
 exports.activate = function(context) {
     for(let [commandId, func] of Object.entries(COMMANDS)) {
         let disposable = vscode.commands.registerCommand(commandId, func);
         context.subscriptions.push(disposable);
     }
+
+    vscode.workspace.onDidSaveTextDocument(onTextDocumentSaved);
 };
 
 

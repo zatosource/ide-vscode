@@ -17,6 +17,7 @@
         "Other"
     ],
     "activationEvents": [
+        "onLanguage:python",
         "onCommand:extension.zatoHotDeploy",
         "onCommand:extension.zatoTestConnection"
     ],
