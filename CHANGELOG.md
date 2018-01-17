@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.2 (2018-01-17)
+
+- Non-functional changes to documentation
+
 ## 1.0.1 (2018-01-17)
 
 - Default endpoint URL path set to /ide-deploy
