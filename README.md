@@ -4,9 +4,17 @@ This is a Visual Studio Code extension that enables single keypress and single
 click hot-deployment of the active Python source file to a Zato cluster
 specified in your workspace or global configuration.
 
-It relies on Zato 3.0's `ide-deploy` endpoint, which is additionally available
-as an add-on for pre-3.0 Zato releases. For Zato 2.0 releases or earlier, please consult
-<a href="https://github.com/zatosource/zato-labs">the zato-labs repository</a>.
+## Prerequisites
+
+All Zato versions are supported. For Zato 3.0+, there are no prerequisites.
+
+With Zato 2.0 or earlier, follow steps below:
+
+* Deploy <a href="https://github.com/zatosource/zato-labs/blob/main/ide-deploy/ide_deploy.py">this service</a> to a Zato cluster
+
+* Mount the newly deployed service on an HTTP channel with a URL path of /ide-upload
+
+* Continue to Setup section below
 
 ## Setup
 
@@ -27,7 +35,7 @@ as an add-on for pre-3.0 Zato releases. For Zato 2.0 releases or earlier, please
 
 * Update the `url` key to point to the base URL of either your one of your Zato
   cluster servers, or its load balancer address. For example,
-  `http://zato:17010/`.
+  `http://zato:17010/ide-deploy`.
 
 * Update the `password` to match the password you entered above.
 
