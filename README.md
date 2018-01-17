@@ -12,7 +12,7 @@ With Zato 2.0 or earlier, follow steps below:
 
 * Deploy <a href="https://github.com/zatosource/zato-labs/blob/main/ide-deploy/ide_deploy.py">this service</a> to a Zato cluster
 
-* Mount the newly deployed service on an HTTP channel with a URL path of /ide-upload
+* Mount the newly deployed service on <a href="https://zato.io/docs/web-admin/channels/plain-http.html>an HTTP channel</a> with a URL path of /ide-upload
 
 * Continue to Setup section below
 
