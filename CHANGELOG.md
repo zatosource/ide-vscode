@@ -1,8 +1,12 @@
 # Change Log
 
+## 1.0.3 (2018-01-17)
+
+- Updated links in docs
+
 ## 1.0.2 (2018-01-17)
 
-- Non-functional changes to documentation
+- Added links to web-admin
 
 ## 1.0.1 (2018-01-17)
 
