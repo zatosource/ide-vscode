@@ -2,7 +2,8 @@
     "name": "ide-vscode",
     "displayName": "Zato for Visual Studio Code",
     "description": "Hot-deploy Zato services to clusters",
-    "version": "0.0.2",
+    "version": "1.0.0",
+    "license": "LGPL-3.0-only",
     "repository": {
         "type": "git",
         "url": "https://github.com/zatosource/ide-vscode.git"
@@ -33,12 +34,14 @@
                 "title": "Test Zato Connection"
             }
         ],
-        "keybindings": [{
-            "command": "extension.zatoHotDeploy",
-            "key": "ctrl+shift+l",
-            "mac": "cmd+shift+l",
-            "when": "editorTextFocus"
-        }],
+        "keybindings": [
+            {
+                "command": "extension.zatoHotDeploy",
+                "key": "ctrl+shift+l",
+                "mac": "cmd+shift+l",
+                "when": "editorTextFocus"
+            }
+        ],
         "menus": {
             "editor/title": [
                 {
