@@ -6,10 +6,10 @@ const Base64 = require('js-base64').Base64;
 
 /**
  * A zato.service.invoke client that handles only JSON payloads and JSON responses.
- * 
- * @param {string} url 
- * @param {string} username 
- * @param {string} password 
+ *
+ * @param {string} url
+ * @param {string} username
+ * @param {string} password
  */
 function ZatoClient(url, username, password) {
     this._url = url;
@@ -29,7 +29,7 @@ function ZatoClient(url, username, password) {
 }
 
 ZatoClient.prototype = {
-    IDE_DEPLOY_SERVICE_SUFFIX: "/zato/ide-deploy",
+    IDE_DEPLOY_SERVICE_SUFFIX: "/ide-deploy",
 
     /**
      * Arrange for a dummy request to be made through the admin.invoke mechanism.
@@ -60,7 +60,7 @@ ZatoClient.prototype = {
 
     /**
      * Arrange for a source file to be hot-deployed to the cluster.
-     * 
+     *
      * @param {string} filename
      *      File name to deploy.
      * @param {string} data

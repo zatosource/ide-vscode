@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.4 (2018-01-17)
+
+- Made ZatoClient aware of the default URL of /ide-deploy
+
 ## 1.0.3 (2018-01-17)
 
 - Updated links in docs
