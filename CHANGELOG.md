@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.6 (2018-01-17)
+
+- Non-functional changes to documentation
+
 ## 1.0.5 (2018-01-17)
 
 - Added info about the hot-deployment marker # zato: ide-deploy=True

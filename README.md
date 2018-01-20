@@ -49,9 +49,9 @@ With Zato 2.0 or earlier, follow steps below:
 
 Make sure that each Python module with Zato services contains this marker at the top:
 
-# zato: ide-deploy=True
+**zato: ide-deploy=True**
 
-This signals to the extension that this particular Python file contains services that can be
+That will signal to the extension that this particular Python file contains services that can be
 hot-deployed to clusters.
 
 Next, while editing a Python source file, simply tap Ctrl-Shift-L (or Cmd-Shift-L on
