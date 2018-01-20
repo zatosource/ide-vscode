@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.5 (2018-01-17)
+
+- Added info about the hot-deployment marker # zato: ide-deploy=True
+
 ## 1.0.4 (2018-01-17)
 
 - Made ZatoClient aware of the default URL of /ide-deploy

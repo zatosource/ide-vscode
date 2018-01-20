@@ -47,7 +47,14 @@ With Zato 2.0 or earlier, follow steps below:
 
 ## Deployment
 
-While editing a Python source file, simply tap Ctrl-Shift-L (or Cmd-Shift-L on
+Make sure that each Python module with Zato services contains this marker at the top:
+
+# zato: ide-deploy=True
+
+This signals to the extension that this particular Python file contains services that can be
+hot-deployed to clusters.
+
+Next, while editing a Python source file, simply tap Ctrl-Shift-L (or Cmd-Shift-L on
 Mac) to start deployment of the current file. The file's basename is used as
 its module filename on the server.
 
