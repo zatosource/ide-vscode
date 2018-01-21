@@ -10,7 +10,8 @@ const MSG = {
     EMPTY_DOC: "Cannot deploy: the Python module you selected contains nothing.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
     PING_OK: "Zato cluster connection pinged OK.",
-    REQUEST_ERROR: "Zato request error: "
+    REQUEST_ERROR: "Zato request error: ",
+    NETWORK_ERROR: "a network error occurred. Please verify your connection settings and ensure the Zato cluster is operational."
 };
 
 const COMMANDS = {
@@ -81,6 +82,10 @@ function onDeploySuccess(msg)
 
 function onDeployError(msg)
 {
+    console.log("onDeployError: %o", msg);
+    if(typeof msg == 'object') {
+        msg = MSG.NETWORK_ERROR;
+    }
     vscode.window.showErrorMessage(MSG.REQUEST_ERROR + msg);
 }
 
@@ -125,7 +130,6 @@ function onZatoPublish()
  */
 function onTextDocumentSaved(doc)
 {
-    console.log('hi');
     if(! doc.fileName.endsWith('.py')) {
         return;
     }
