@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.7 (2018-01-22)
+
+- Cosmetic improvements to display of network errors.
+
 ## 1.0.6 (2018-01-17)
 
 - Non-functional changes to documentation
@@ -37,7 +41,6 @@
 
 - Ensure error message is rendered for networking layer connection failures
 - Split development notes out of README.md
-
 
 ## 0.0.1 (2018-01-11)
 

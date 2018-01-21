@@ -2,7 +2,7 @@
     "name": "ide-vscode",
     "displayName": "Zato for Visual Studio Code",
     "description": "Hot-deploy Zato services to clusters",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "license": "LGPL-3.0-only",
     "repository": {
         "type": "git",
