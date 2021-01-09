@@ -4,22 +4,10 @@ This is a Visual Studio Code extension that enables single keypress and single
 click hot-deployment of the active Python source file to a Zato cluster
 specified in your workspace or global configuration.
 
-## Prerequisites
-
-All Zato versions are supported. For Zato 3.0+, there are no prerequisites.
-
-With Zato 2.0 or earlier, follow steps below:
-
-* Deploy <a href="https://github.com/zatosource/zato-labs/blob/main/ide-deploy/ide_deploy.py">this service</a> to a Zato cluster
-
-* Mount the newly deployed service on <a href="https://zato.io/docs/web-admin/channels/plain-http.html">an HTTP channel</a> with a URL path of /ide-deploy
-
-* Continue to Setup section below
-
 ## Setup
 
 * Once you have installed the extension, visit the **Security -> HTTP Basic
-  Auth** section of the administration UI for your cluster:
+  Auth** section of the Dashboard UI for your cluster:
 
   ![HTTP Basic Auth](images/basic_auth.png)
 
@@ -42,7 +30,7 @@ With Zato 2.0 or earlier, follow steps below:
 * Open the Visual Studio command palette (Cmd-Shift-P or Ctrl-Shift-P) and
   search for "zato".
 
-* Select the **Test Zato Connection** command. A message should appear
+* Select the **Test Zato Connection** command. A message will appear
   indicating communication with the cluster was successful.
 
 ## Deployment

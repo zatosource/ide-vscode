@@ -2,13 +2,13 @@
     "name": "ide-vscode",
     "displayName": "Zato for Visual Studio Code",
     "description": "Hot-deploy Zato services to clusters",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "license": "LGPL-3.0-only",
     "repository": {
         "type": "git",
         "url": "https://github.com/zatosource/ide-vscode.git"
     },
-    "icon": "images/zato-128xsquare-alpha.png",
+    "icon": "images/zato-128xsquare.png",
     "galleryBanner.color": "#ffffe3",
     "publisher": "zatosource",
     "engines": {
@@ -57,7 +57,7 @@
                 "zato.url": {
                     "type": "string",
                     "default": "http://localhost:11223/",
-                    "description": "URL to the Zato server or load balancer where changes should be published."
+                    "description": "URL to the Zato load balancer or server where changes should be published."
                 },
                 "zato.username": {
                     "type": "string",
