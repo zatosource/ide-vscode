@@ -36,3 +36,17 @@ Refer to the Visual Studio Code docs. To test the extension during development:
 * Press F5 to launch a new copy of Visual Studio Code with the in-development plug-in
   loaded.
 * Rinse and repeat.
+
+Note that the Marketplace's documentation for how to upload the plugin changes from time
+to time and may be at times incorrect. As of today (January 2021), the steps are:
+
+* Create a personal access token in the marketplace
+* Give it access to everything in every scope (really required) for as little time as needed
+* Locally, run :
+
+  * sudo npm install -g vsce
+  * vsce package
+  * vsce login zatosource (this will ask for the personal token)
+  * vsce publish (this will upload the token)
+
+* Now, go to the Marketplace and delete (revoke) the token used
