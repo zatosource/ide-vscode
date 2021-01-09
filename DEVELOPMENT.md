@@ -40,13 +40,13 @@ Refer to the Visual Studio Code docs. To test the extension during development:
 Note that the Marketplace's documentation for how to upload the plugin changes from time
 to time and may be at times incorrect. As of today (January 2021), the steps are:
 
-* Create a personal access token in the marketplace
-* Give it access to everything in every scope (really required) for as little time as needed
+* Create a personal access token in the Marketplace
+* Give it access to everything in every scope and organisation (really required) for as little time as needed
 * Locally, run :
 
   * sudo npm install -g vsce
   * vsce package
   * vsce login zatosource (this will ask for the personal token)
-  * vsce publish (this will upload the token)
+  * vsce publish (this will upload the plugin)
 
 * Now, go to the Marketplace and delete (revoke) the token used
