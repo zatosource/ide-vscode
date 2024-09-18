@@ -2,7 +2,7 @@
     "name": "ide-vscode",
     "displayName": "Zato for Visual Studio Code",
     "description": "Hot-deploy Zato services to clusters",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "license": "LGPL-3.0-only",
     "repository": {
         "type": "git",
@@ -76,18 +76,18 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "eslint": "^4.6.1",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "eslint": "^9.9.1",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6"
     },
     "dependencies": {
         "http-client": "^4.3.1",
         "js-base64": "^2.4.0",
         "path": "^0.12.7",
         "request": "^2.83.0",
-        "request-promise-native": "^1.0.5",
-        "vsce": "^1.35.0"
+        "request-promise-native": "^0.0.0",
+        "vsce": "^2.15.0"
     }
 }

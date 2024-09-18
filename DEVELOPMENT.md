@@ -15,7 +15,7 @@ figure out how to get a recent release for your OS.
 
 ## Preparing for development
 
-From the `ide-vs-code` directory, simply type `npm install`. This arranges for
+From the `ide-vscode` directory, simply type `npm install`. This arranges for
 the `node_modules` directory to be populated with dependencies taken from
 `package.json`.
 
