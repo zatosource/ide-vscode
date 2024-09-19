@@ -1,17 +1,15 @@
-const path = require('path');
-const request = require('request');
+const path = require('path')
 const vscode = require('vscode');
 const ZatoClient = require('./zato_client');
 
-
 const MSG = {
-    NO_CONFIG: "Please configure your Zato cluster settings.",
+    NO_CONFIG: "Please configure your Zato server settings.",
     NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
     EMPTY_DOC: "Cannot deploy: the Python module you selected contains nothing.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
-    PING_OK: "Zato cluster connection pinged OK.",
+    PING_OK: "Zato server connection pinged OK.",
     REQUEST_ERROR: "Zato request error: ",
-    NETWORK_ERROR: "a network error occurred. Please verify your connection settings and ensure the Zato cluster is operational."
+    NETWORK_ERROR: "A network error occurred. Please verify your connection settings and ensure the Zato server is running."
 };
 
 const COMMANDS = {
@@ -29,7 +27,7 @@ const UPLOAD_MARKER_RE = /#\s+zato:\s+ide-deploy=True/;
 function getZatoClient()
 {
     var model = vscode.workspace.getConfiguration('zato');
-    var url = model.get('url', '');
+    var url = 'http://localhost:11223/ide-deploy' || model.get('address', '') || model.get('url', '');
     var username = model.get('username', '');
     var password = model.get('password', '');
 
@@ -44,7 +42,7 @@ function getZatoClient()
 function getZatoClientOrOpenConfig()
 {
     var client = getZatoClient();
-    if(! client) {
+    if(!client) {
         vscode.commands.executeCommand("workbench.action.openGlobalSettings");
         vscode.window.showInformationMessage(MSG.NO_CONFIG);
     }
@@ -54,6 +52,7 @@ function getZatoClientOrOpenConfig()
 
 function onZatoPingSuccess()
 {
+    console.log("onZatoPingSuccess: ");
     vscode.window.showInformationMessage(MSG.PING_OK);
 }
 
@@ -82,10 +81,9 @@ function onDeploySuccess(msg)
 
 function onDeployError(msg)
 {
-    console.log("onDeployError: %o", msg);
-    if(typeof msg == 'object') {
-        msg = MSG.NETWORK_ERROR;
-    }
+    //if(typeof msg == 'object') {
+    //    msg = MSG.NETWORK_ERROR;
+    //}
     vscode.window.showErrorMessage(MSG.REQUEST_ERROR + msg);
 }
 
@@ -98,21 +96,21 @@ function onZatoPublish()
     }
 
     // Give up if there is no active document.
-    if(! vscode.window.activeTextEditor) {
+    if(!vscode.window.activeTextEditor) {
         vscode.window.showInformationMessage(MSG.NO_DOC);
         return;
     }
 
     // Ensure the document is a Python module.
     var doc = vscode.window.activeTextEditor.document;
-    if(! (doc && doc.fileName.endsWith('.py'))) {
+    if(!(doc && doc.fileName.endsWith('.py'))) {
         vscode.window.showInformationMessage(MSG.NOT_PYTHON);
         return;
     }
 
     var filename = path.basename(doc.fileName);
     var data = doc.getText();
-    if(! data.length) {
+    if(!data.length) {
         vscode.window.showErrorMessage(MSG.EMPTY_DOC);
         return;
     }
@@ -130,12 +128,12 @@ function onZatoPublish()
  */
 function onTextDocumentSaved(doc)
 {
-    if(! doc.fileName.endsWith('.py')) {
+    if(!doc.fileName.endsWith('.py')) {
         return;
     }
 
     var text = doc.getText() || '';
-    if(! text.match(UPLOAD_MARKER_RE)) {
+    if(!text.match(UPLOAD_MARKER_RE)) {
         return;
     }
 
@@ -143,16 +141,29 @@ function onTextDocumentSaved(doc)
     onZatoPublish();
 }
 
+function activate(context) {
 
-exports.activate = function(context) {
+    // Use the console to output diagnostic information (console.log) and errors (console.error)
+    // This line of code will only be executed once when your extension is activated
+    console.log('Congratulations, your extension "abc456-testing" is now active!');
+
+    const disposable = vscode.commands.registerCommand('abc456-testing.helloWorld', function () {
+        vscode.window.showInformationMessage('Hello World from abc456-testing!');
+        vscode.window.showInformationMessage('ABC3!');
+    });
+    context.subscriptions.push(disposable);
+
     for(let [commandId, func] of Object.entries(COMMANDS)) {
         let disposable = vscode.commands.registerCommand(commandId, func);
         context.subscriptions.push(disposable);
     }
-
     vscode.workspace.onDidSaveTextDocument(onTextDocumentSaved);
-};
+}
 
+// This method is called when your extension is deactivated
+function deactivate() {}
 
-exports.deactivate = function() {
-};
+module.exports = {
+    activate,
+    deactivate
+}

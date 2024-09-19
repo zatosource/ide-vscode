@@ -1,93 +1,90 @@
 {
-    "name": "ide-vscode",
-    "displayName": "Zato for Visual Studio Code",
-    "description": "Hot-deploy Zato services to clusters",
-    "version": "1.0.9",
-    "license": "LGPL-3.0-only",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/zatosource/ide-vscode.git"
-    },
-    "icon": "images/zato-128xsquare.png",
-    "galleryBanner.color": "#ffffe3",
-    "publisher": "zatosource",
-    "engines": {
-        "vscode": "^1.19.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onLanguage:python",
-        "onCommand:extension.zatoHotDeploy",
-        "onCommand:extension.zatoTestConnection"
-    ],
-    "main": "./extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.zatoHotDeploy",
-                "title": "Hot-deploy to Zato"
-            },
-            {
-                "command": "extension.zatoTestConnection",
-                "title": "Test Zato Connection"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "extension.zatoHotDeploy",
-                "key": "ctrl+shift+l",
-                "mac": "cmd+shift+l",
-                "when": "editorTextFocus"
-            }
-        ],
-        "menus": {
-            "editor/title": [
-                {
-                    "command": "extension.zatoHotDeploy",
-                    "group": "navigation"
-                }
-            ]
+  "name": "abc456-testing",
+  "displayName": "abc456-testing",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "abc456-testing.helloWorld",
+      "title": "Hello World"
+      },
+      {
+        "command": "extension.zatoHotDeploy",
+        "title": "Hot-deploy to Zato"
+      },
+      {
+        "command": "extension.zatoTestConnection",
+        "title": "Test Zato Connection"
+      }],
+      "keybindings": [
+        {
+            "command": "extension.zatoTestConnection",
+            "key": "ctrl+shift+k",
+            "mac": "cmd+shift+k",
+            "when": "editorTextFocus"
         },
-        "configuration": {
-            "type": "object",
-            "title": "Zato Publish Configuration",
-            "properties": {
-                "zato.url": {
-                    "type": "string",
-                    "default": "http://localhost:11223/",
-                    "description": "URL to the Zato load balancer or server where changes should be published."
-                },
-                "zato.username": {
-                    "type": "string",
-                    "default": "ide_publisher",
-                    "description": "User name to authenticate to Zato with."
-                },
-                "zato.password": {
-                    "type": "string",
-                    "description": "Password to authenticate to Zato with."
-                }
+        {
+          "command": "extension.zatoHotDeploy",
+          "key": "ctrl+shift+l",
+          "mac": "cmd+shift+l",
+          "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+        "editor/title": [
+            {
+                "command": "extension.zatoHotDeploy",
+                "group": "navigation"
+            }
+        ]
+    },
+    "configuration": {
+        "type": "object",
+        "title": "Zato Publish Configuration",
+        "properties": {
+            "zato.address": {
+                "type": "string",
+                "default": "http://localhost:11223/ide-deploy",
+                "description": "URL to the Zato server where changes should be published."
+            },
+            "zato.username": {
+                "type": "string",
+                "default": "ide_publisher",
+                "description": "User name to authenticate to Zato with."
+            },
+            "zato.password": {
+                "type": "string",
+                "description": "Password to authenticate to Zato with."
             }
         }
-    },
-    "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "@types/mocha": "^2.2.42",
-        "@types/node": "^7.0.43",
-        "eslint": "^9.9.1",
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6"
-    },
-    "dependencies": {
-        "http-client": "^4.3.1",
-        "js-base64": "^2.4.0",
-        "path": "^0.12.7",
-        "request": "^2.83.0",
-        "request-promise-native": "^0.0.0",
-        "vsce": "^2.15.0"
     }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.93.0",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "eslint": "^9.9.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  },
+  "dependencies": {
+      "axios": "^1.7.7",
+      "js-base64": "^2.4.0",
+      "vsce": "^2.15.0"
+  }
 }

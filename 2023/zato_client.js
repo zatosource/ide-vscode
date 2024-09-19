@@ -1,8 +1,7 @@
 "use strict";
 
-const request = require('request-promise-native');
+const axios = require('axios').default;
 const Base64 = require('js-base64').Base64;
-
 
 /**
  * A zato.service.invoke client that handles only JSON payloads and JSON responses.
@@ -15,17 +14,6 @@ function ZatoClient(url, username, password) {
     this._url = url;
     this._username = username;
     this._password = password;
-    this._request = request.defaults({
-        baseUrl: url,
-        url: this.IDE_DEPLOY_SERVICE_SUFFIX,
-        auth: {
-            user: username,
-            pass: password,
-            sendImmediately: true // Don't waste a roundtrip on HTTP 401.
-        },
-        json: true,
-        resolveWithFullResponse: true
-    });
 }
 
 ZatoClient.prototype = {
@@ -41,25 +29,30 @@ ZatoClient.prototype = {
      *      argument may be used as an internal diagnostic only.
      */
     ping: function(onSuccess, onFailure) {
-        (this._request({})
-            .then(this._onPingResponse.bind(this, onSuccess, onFailure))
-            .catch(onFailure));
+        (
+        axios.post(this._url, {}, {
+            auth: {
+                username: this._username,
+                password: this._password
+            }
+            })
+        .then(this._onPingResponse.bind(this, onSuccess, onFailure))
+        .catch(onFailure)
+        );
     },
 
     _onPingResponse: function(onSuccess, onFailure, response) {
-        if(response.statusCode != 200) {
-            console.log("_onPingResponse: status!=200: %o", response);
-            onFailure('Cluster returned HTTP status ' + response.statusCode);
-        } else if(! response.body.zato_ide_deploy_create_response.success) {
-            console.log("_onPingResponse: success=false: %o", response.body);
-            onFailure('Cluster indicated failure: ' + response.body.zato_ide_deploy_create_response.msg);
+        if(response.status != 200) {
+            console.log("_onPingResponse: status!=200: %o", response.data);
+            onFailure('Server returned HTTP status ' + response.status);
         } else {
-            onSuccess(response.body.zato_ide_deploy_create_response.msg);
+            console.log("_onPingResponse.status OK: %o", response.status);
+            onSuccess(response.data.zato_ide_deploy_create_response.msg);
         }
     },
 
     /**
-     * Arrange for a source file to be hot-deployed to the cluster.
+     * Arrange for a source file to be hot-deployed to the server.
      *
      * @param {string} filename
      *      File name to deploy.
@@ -78,22 +71,30 @@ ZatoClient.prototype = {
             payload: Base64.encode(data)
         };
 
-        (this._request({json: json})
-            .then(this._onDeployResponse.bind(this, onSuccess, onFailure))
-            .catch(onFailure));
+        (
+        axios.post(this._url, json, {
+            auth: {
+              username: this._username,
+              password: this._password
+            }
+          })
+        .then(this._onDeployResponse.bind(this, onSuccess, onFailure))
+        .catch(onFailure)
+        );
     },
 
     _onDeployResponse: function(onSuccess, onFailure, response)
     {
-        console.log("_onDeployResponse %o", response);
-        if(response.statusCode != 200) {
-            console.log("_onDeployResponse: status!=200: %o", response);
-            onFailure('Cluster returned HTTP status ' + response.statusCode);
-        } else if(! response.body.zato_ide_deploy_create_response.success) {
-            console.log("_onPingResponse: success=false: %o", response.body);
-            onFailure('Cluster indicated failure: ' + response.body.zato_ide_deploy_create_response.msg);
+
+        console.log("_onDeployResponse.status %o", response.status);
+        if(response.status != 200) {
+            console.log("_onDeployResponse: status!=200: %o", response.data);
+            onFailure('Server returned HTTP status ' + response.status);
+        } else if(! response.data.zato_ide_deploy_create_response.success) {
+            console.log("_onPingResponse: success=false: %o", response.data);
+            onFailure('Server indicated failure: ' + response.data.zato_ide_deploy_create_response.msg);
         } else {
-            onSuccess(response.body.zato_ide_deploy_create_response.msg);
+            onSuccess(response.data.zato_ide_deploy_create_response.msg);
         }
     }
 };
