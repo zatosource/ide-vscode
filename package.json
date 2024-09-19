@@ -1,13 +1,21 @@
 {
-  "name": "abc456-testing",
-  "displayName": "abc456-testing",
-  "description": "",
-  "version": "0.0.1",
+  "name": "ide-vscode",
+  "displayName": "Zato for Visual Studio Code",
+  "description": "Hot-deploy Zato services to servers",
+  "version": "1.10.0",
+  "license": "AGPPL-3.0",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/zatosource/ide-vscode.git"
+  },
+  "icon": "images/zato-128xsquare.png",
+  "galleryBanner.color": "#ffffe3",
+  "publisher": "zatosource",
   "engines": {
-    "vscode": "^1.63.0"
+      "vscode": "^1.19.0"
   },
   "categories": [
-    "Other"
+      "Other"
   ],
   "activationEvents": [
     "onLanguage:python"
