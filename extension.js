@@ -27,7 +27,7 @@ const UPLOAD_MARKER_RE = /#\s+zato:\s+ide-deploy=True/;
 function getZatoClient()
 {
     var model = vscode.workspace.getConfiguration('zato');
-    var url = 'http://localhost:11223/ide-deploy' || model.get('address', '') || model.get('url', '');
+    var url = 'http://localhost:17010/ide-deploy' || model.get('address', '') || model.get('url', '');
     var username = model.get('username', '');
     var password = model.get('password', '');
 
