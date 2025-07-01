@@ -5,7 +5,7 @@ VERSION := $(shell node -p "require('./package.json').version")
 VSIX_FILE := $(NAME)-$(VERSION).vsix
 EXTENSION_ID := $(PUBLISHER).$(NAME)
 
-.PHONY: all local-install package clean uninstall
+.PHONY: all local-install package clean uninstall publish
 
 all: local-install
 
@@ -28,6 +28,16 @@ package:
 	@echo "Packaging with vsce..."
 	@npx vsce package
 	@echo "Created $(VSIX_FILE)"
+
+publish: package
+	@if [ -z "$(VSCE_PAT)" ]; then \
+		echo "Error: The VSCE_PAT environment variable is not set."; \
+		echo "Usage: VSCE_PAT=<your_token> make publish"; \
+		exit 1; \
+	fi
+	@echo "Publishing $(VSIX_FILE) to the Marketplace..."
+	@npx vsce publish --pat $(VSCE_PAT)
+	@echo "Done."
 
 # Removes generated files.
 clean:
