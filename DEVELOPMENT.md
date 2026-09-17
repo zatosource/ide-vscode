@@ -37,6 +37,21 @@ Refer to the Visual Studio Code docs. To test the extension during development:
   loaded.
 * Rinse and repeat.
 
+## Running the tests
+
+`make test` needs Node and Python 3 and nothing else. It starts `test/live/dummy_zato_server.py`,
+a standard-library HTTP server that answers the way a Zato server's `/ide-deploy` channel does -
+it checks Basic Auth, base64-decodes the uploaded file, replies with `zato_ide_deploy_create_response`
+and records every request it receives. The runner, `test/live/run-live-test.js`, then loads
+`extension.js` with a stand-in for the `vscode` module whose `zato.address` points at that server,
+drives the registered commands and the save handler the way VS Code does, and asserts both on the
+messages the extension shows and on what the server recorded.
+
+The cases cover deployment by command and on save, the deployment marker, the connection test against
+a server that answers an empty body and against one that rejects it, wrong credentials, a deployment the
+server reports as failed, a refused connection and missing configuration. The test never connects to
+port 17010.
+
 Note that the Marketplace's documentation for how to upload the plugin changes from time
 to time and may be at times incorrect. As of today (January 2021), the steps are:
 

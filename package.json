@@ -2,7 +2,7 @@
   "name": "ide-vscode",
   "displayName": "Zato for Visual Studio Code",
   "description": "Hot-deploy Zato services to servers",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "license": "AGPL-3.0",
   "repository": {
       "type": "git",
@@ -22,10 +22,7 @@
 ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "abc456-testing.helloWorld",
-      "title": "Hello World"
-      },
+    "commands": [
       {
         "command": "extension.zatoHotDeploy",
         "title": "Hot-deploy to Zato"
@@ -62,7 +59,7 @@
         "properties": {
             "zato.address": {
                 "type": "string",
-                "default": "http://localhost:11223/ide-deploy",
+                "default": "http://localhost:17010/ide-deploy",
                 "description": "URL to the Zato server where changes should be published."
             },
             "zato.username": {
@@ -80,7 +77,8 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "test:live": "node test/live/run-live-test.js"
   },
   "devDependencies": {
     "@types/vscode": "^1.19.0",

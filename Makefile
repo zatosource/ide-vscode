@@ -5,7 +5,7 @@ VERSION := $(shell node -p "require('./package.json').version")
 VSIX_FILE := $(NAME)-$(VERSION).vsix
 EXTENSION_ID := $(PUBLISHER).$(NAME)
 
-.PHONY: all local-install package clean uninstall publish
+.PHONY: all local-install package clean uninstall publish test
 
 all: local-install
 
@@ -38,6 +38,11 @@ publish: package
 	@echo "Publishing $(VSIX_FILE) to the Marketplace..."
 	@npx vsce publish --pat $(VSCE_PAT)
 	@echo "Done."
+
+# Drives the extension against a dummy Zato server and asserts what arrives.
+test:
+	@npm install --silent --no-progress
+	@node test/live/run-live-test.js
 
 # Removes generated files.
 clean:

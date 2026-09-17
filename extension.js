@@ -7,9 +7,7 @@ const MSG = {
     NO_DOC: "Please select a text editor window with your Zato service source prior to executing the Publish command.",
     EMPTY_DOC: "Cannot deploy: the Python module you selected contains nothing.",
     NOT_PYTHON: "The selected document does not appear to be a Python module. Please select a Python module.",
-    PING_OK: "Zato server connection pinged OK.",
-    REQUEST_ERROR: "Zato request error: ",
-    NETWORK_ERROR: "A network error occurred. Please verify your connection settings and ensure the Zato server is running."
+    REQUEST_ERROR: "Zato request error: "
 };
 
 const COMMANDS = {
@@ -27,9 +25,9 @@ const UPLOAD_MARKER_RE = /#\s+zato:\s+ide-deploy=True/;
 function getZatoClient()
 {
     var model = vscode.workspace.getConfiguration('zato');
-    var url = 'http://localhost:17010/ide-deploy' || model.get('address', '') || model.get('url', '');
-    var username = model.get('username', '');
-    var password = model.get('password', '');
+    var url = model.get('address');
+    var username = model.get('username');
+    var password = model.get('password');
 
     if(url && username && password) {
         return new ZatoClient(url, username, password);
@@ -50,17 +48,15 @@ function getZatoClientOrOpenConfig()
 }
 
 
-function onZatoPingSuccess()
+function onZatoPingSuccess(msg)
 {
-    console.log("onZatoPingSuccess: ");
-    vscode.window.showInformationMessage(MSG.PING_OK);
+    vscode.window.showInformationMessage(msg);
 }
 
 
-function onZatoPingFailure(err)
+function onZatoPingFailure(msg)
 {
-    console.log("onZatoPingFailure: " + err);
-    vscode.window.showErrorMessage(MSG.REQUEST_ERROR + err);
+    vscode.window.showErrorMessage(MSG.REQUEST_ERROR + msg);
 }
 
 
@@ -81,9 +77,6 @@ function onDeploySuccess(msg)
 
 function onDeployError(msg)
 {
-    //if(typeof msg == 'object') {
-    //    msg = MSG.NETWORK_ERROR;
-    //}
     vscode.window.showErrorMessage(MSG.REQUEST_ERROR + msg);
 }
 
@@ -142,16 +135,6 @@ function onTextDocumentSaved(doc)
 }
 
 function activate(context) {
-
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "abc456-testing" is now active!');
-
-    const disposable = vscode.commands.registerCommand('abc456-testing.helloWorld', function () {
-        vscode.window.showInformationMessage('Hello World from abc456-testing!');
-        vscode.window.showInformationMessage('ABC3!');
-    });
-    context.subscriptions.push(disposable);
 
     for(let [commandId, func] of Object.entries(COMMANDS)) {
         let disposable = vscode.commands.registerCommand(commandId, func);
