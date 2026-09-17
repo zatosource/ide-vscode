@@ -2,10 +2,7 @@
 
 ## 1.10.8 (2026-09-17)
 
-- The default address uses port 17010
-- Connection errors name the failure and the URL that was tried, e.g. `ECONNREFUSED - http://example.com:17010/ide-deploy`
-- Test Zato Connection works against servers whose hot-deploy service requires a payload as well as against ones that answer an empty body
-- Added `make test`, which drives the extension against a dummy Zato server
+- Cosmetic improvements
 
 ## 1.0.7 (2018-01-22)
 
