@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.10.8 (2026-09-17)
+
+- Cosmetic improvements
+
 ## 1.0.7 (2018-01-22)
 
 - Cosmetic improvements to display of network errors.
