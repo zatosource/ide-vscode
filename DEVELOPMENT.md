@@ -65,3 +65,28 @@ to time and may be at times incorrect. As of today (January 2021), the steps are
   * vsce publish (this will upload the plugin)
 
 * Now, go to the Marketplace and delete (revoke) the token used
+
+## Publishing for VSCodium
+
+VSCodium does not use the Visual Studio Marketplace, it installs extensions from
+[Open VSX](https://open-vsx.org). The extension itself needs no changes, it is the same
+`.vsix` published to a second registry.
+
+Tokens come from Open VSX, one-time setup:
+
+* Sign in at https://open-vsx.org with an Eclipse account (create one at https://accounts.eclipse.org
+  if needed, and link your GitHub account to it there)
+* Open https://open-vsx.org/user-settings/profile and sign the Publisher Agreement
+* Open https://open-vsx.org/user-settings/tokens and generate an access token, this is `OVSX_PAT`
+* Create the namespace once: `OVSX_PAT=<token> make create-namespace-openvsx`. This creates the
+  `zatosource` namespace, which must match the `publisher` in `package.json`.
+* To have the namespace marked as verified, open an issue at https://github.com/EclipseFdn/open-vsx.org/issues
+  asking for ownership of `zatosource`. Publishing works without it, the extension page shows a note
+  about the unverified namespace until it is granted.
+
+Then, for every release, `VSCE_PAT=<token> OVSX_PAT=<token> make publish` publishes to both
+registries in one go.
+
+To install the packaged `.vsix` straight into a local VSCodium instead of through a registry:
+
+* `make local-install EDITOR_BIN=codium`

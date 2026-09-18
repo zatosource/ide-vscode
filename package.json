@@ -5,21 +5,21 @@
   "version": "1.10.8",
   "license": "AGPL-3.0",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/zatosource/ide-vscode.git"
+    "type": "git",
+    "url": "https://github.com/zatosource/ide-vscode.git"
   },
   "icon": "images/zato-logo-blue-240x240.png",
   "galleryBanner.color": "#ffffe3",
   "publisher": "zatosource",
   "engines": {
-      "vscode": "^1.19.0"
+    "vscode": "^1.19.0"
   },
   "categories": [
-      "Other"
+    "Other"
   ],
   "activationEvents": [
     "onLanguage:python"
-],
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
@@ -30,48 +30,49 @@
       {
         "command": "extension.zatoTestConnection",
         "title": "Test Zato Connection"
-      }],
-      "keybindings": [
-        {
-            "command": "extension.zatoTestConnection",
-            "key": "ctrl+shift+k",
-            "mac": "cmd+shift+k",
-            "when": "editorTextFocus"
-        },
-        {
-          "command": "extension.zatoHotDeploy",
-          "key": "ctrl+shift+l",
-          "mac": "cmd+shift+l",
-          "when": "editorTextFocus"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.zatoTestConnection",
+        "key": "ctrl+shift+k",
+        "mac": "cmd+shift+k",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.zatoHotDeploy",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l",
+        "when": "editorTextFocus"
       }
     ],
     "menus": {
-        "editor/title": [
-            {
-                "command": "extension.zatoHotDeploy",
-                "group": "navigation"
-            }
-        ]
+      "editor/title": [
+        {
+          "command": "extension.zatoHotDeploy",
+          "group": "navigation"
+        }
+      ]
     },
     "configuration": {
-        "type": "object",
-        "title": "Zato Publish Configuration",
-        "properties": {
-            "zato.address": {
-                "type": "string",
-                "default": "http://localhost:17010/ide-deploy",
-                "description": "URL to the Zato server where changes should be published."
-            },
-            "zato.username": {
-                "type": "string",
-                "default": "ide_publisher",
-                "description": "User name to authenticate to Zato with."
-            },
-            "zato.password": {
-                "type": "string",
-                "description": "Password to authenticate to Zato with."
-            }
+      "type": "object",
+      "title": "Zato Publish Configuration",
+      "properties": {
+        "zato.address": {
+          "type": "string",
+          "default": "http://localhost:17010/ide-deploy",
+          "description": "URL to the Zato server where changes should be published."
+        },
+        "zato.username": {
+          "type": "string",
+          "default": "ide_publisher",
+          "description": "User name to authenticate to Zato with."
+        },
+        "zato.password": {
+          "type": "string",
+          "description": "Password to authenticate to Zato with."
         }
+      }
     }
   },
   "scripts": {
@@ -81,16 +82,17 @@
     "test:live": "node test/live/run-live-test.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.19.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
-    "eslint": "^9.9.1",
+    "@types/vscode": "^1.19.0",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.9.1",
+    "ovsx": "^1.2.0"
   },
   "dependencies": {
-      "axios": "^1.7.7",
-      "js-base64": "^2.4.0",
-      "vsce": "^2.15.0"
+    "axios": "^1.7.7",
+    "js-base64": "^2.4.0",
+    "vsce": "^2.15.0"
   }
 }
